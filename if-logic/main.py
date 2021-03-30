@@ -1,4 +1,4 @@
-## /usr/bin/env python3
+#! /usr/bin/env python3
 # importing the random module for randomly generating user element
 import random
 
@@ -26,11 +26,12 @@ questions = [
 
 #this is a helper function to validate each question
 def ask_question(number):
-    answer = ""
+    answer = "10" #placeholder so int() can be happy
     tries = 0
     while not int(answer) in range(1,7):
         if tries == 0:
             answer = input(questions[number])
+            tries = "more thean one"
         else:
             answer = input("Sorry bud, You're stuck here until you choose an answer between 1-6. \n" + questions[number])
     return answer
@@ -57,7 +58,9 @@ def main():
             user_element = elements[3]
         else:
             user_element = elements[random.randint(0,5)]
+        number = number + 1
     print_user_element(user_element)
+    print("Exiting Quiz. You can't change what you are!!")
 
 
 main()
