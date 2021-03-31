@@ -3,7 +3,9 @@
 
 # imports always go at the top of your code
 import requests
-import random # to get a random cat fact
+import random  # to get a random cat fact
+
+
 def main():
     """Run time code"""
     ## create r, which is our request object
@@ -18,12 +20,11 @@ def main():
 
 
 def get_random():
-
     ## create r, which is our request object
     r = requests.get('https://cat-fact.herokuapp.com/facts')
 
-
     # CUSTOMIZATION 02 -try getting a SINGLE random fact
     print("This is your random cat fact: " + random.choice(r.json()).get("text"))
+
 
 get_random()
