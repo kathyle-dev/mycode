@@ -16,8 +16,8 @@ elements = [
 
 # this is the list of quiz questions
 questions = [
-    "(1) What's your favorite color? \n1: Red \n2: Blue \n3. Green \n4. White \n5. Yellow \n6. You didn't list it :( \n",
-    "(2) What's your favorite season? \n1: Fall \n2. Spring \n3. Summer \n4. Winter \n5. All of Them! \n6. I hate seasons \n",
+    "(1) What's your favorite color? \n1. Red \n2. Blue \n3. Green \n4. White \n5. Yellow \n6. You didn't list it :( \n",
+    "(2) What's your favorite season? \n1. Fall \n2. Spring \n3. Summer \n4. Winter \n5. All of Them! \n6. I hate seasons \n",
     "(3) What's your thoughts on Avatar: The Last Airbender? \n1. Loved it \n2. Hated it \n3. Meh \n4. That live-action movie was awesome! \n5. Haven't watched it \n6. Is that the one with the blue people? \n",
     "(4) Vanilla or Chocolate? \n1. Vanilla \n2. Chocolate \n3. Both \n4. Neither \n5. Mint \n6. Is this for Ice Cream? \n",
     "(5) What's the first thing you'd do with your new abilities? \n1. REVENGE \n2. Join the Avengers \n3. Join the Justice League \n4. Become a movie star \n5. Rob a bank \n6. Code \n",
@@ -54,7 +54,9 @@ def print_user_element(element):
 def main():
     number = 0
     user_element = ""
-
+    print("\n ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ \n")
+    print("Welcome to the ULTIMATE 'WHAT BENDING ELEMENT ARE YOU?' quiz! \nYou will know what abilities you possess in just minutes. Good Luck!")
+    print("\n ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ ϟ \n")
     # this loop will take the user through all 6 questions and assign them to an element depending on SPECIFIC answers
     while number < 6:
         answer = ask_question(number)
