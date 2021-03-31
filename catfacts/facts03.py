@@ -8,6 +8,11 @@ def main():
     """Run time code"""
     ## create r, which is our request object
     r = requests.get('https://cat-fact.herokuapp.com/facts')
+    
+    #CUSTOM 01 - TRY OTHER METHODS ON THE REQUEST OBJ
+    print(r.headers)
+    print(r.status_code)
+    print(r.elapsed)
 
     ## catfact is our iterable -- that just means it will take on the values found within
     ## r.json()["all"], one after the next-- which happens to be a dictionary
@@ -27,3 +32,5 @@ def get_random():
     print("This is your random cat fact: " + random.choice(r.json()).get("text"))
 
 get_random()
+
+main()
