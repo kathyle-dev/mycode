@@ -1,114 +1,96 @@
 #!/usr/bin/python3
+import random
+from rpgclasses import Player
+from game import Game
 
-# Replace RPG starter project with this code when new instructions are live
+"""THIS IS KATHY'S ZOMBIE RPG GAME"""
 
-def showInstructions():
-  #print a main menu and the commands
-  print('''
-RPG Game
-========
-Commands:
-  go [direction]
-  get [item]
-''')
 
-def showStatus():
-  #print the player's current status
-  print('---------------------------')
-  print('You are in the ' + currentRoom)
-  #print the current inventory
-  print('Inventory : ' + str(inventory))
-  #print an item if there is one
-  if "item" in rooms[currentRoom]:
-    print('You see a ' + rooms[currentRoom]['item'])
-  print("---------------------------")
+# dict of possible weapons
+items = {
+    "Knife": {
+        "desc": "This is a rusty knife. Still looks sharp though.",
+        "success": "You've lunged at the zombie with your knife! Direct hit to the brain.",
+        "failure": "You slipped! You missed the zombie by a hair!",
+        "type": "weapons"
+    },
+    "Gun": {
+        "desc": "A good ol' Smith & Wesson. It has ",
+        "success": "You've fired a shot! It miraculously hits the heart.",
+        "failure": "You've fired a shot and MISSED! Hope the sound doesn't attract all of the zombies",
+        "bullets": 6,
+        "type": "weapons"
+    },
+    "Key": {
+        "desc": "A key. Maybe it'll open one of these doors?",
+        "success": "You try the lock and it worked!",
+        "failure": "Door's still locked. Gotta try a different door.",
+        "type": "aid"
+    },
+    "Sandwich": {
+        "desc": "It's tuna. Seems edible.",
+        "success": "You ate it. Stomach seems ok.",
+        "failure": "YIKES! The food had zombie blood. You turned into a zombie.",
+        "type": "aid"
+    }
+}
 
-#an inventory, which is initially empty
-inventory = []
-
-#a dictionary linking a room to other rooms
+# a dictionary linking a room to other rooms
 ## A dictionary linking a room to other rooms
 rooms = {
 
-            'Hall' : {
-                  'south' : 'Kitchen',
-                  'east'  : 'Dining Room',
-                  'item'  : 'key'
-                },
+    'Hall': {
+        'desc': "Just a regular hallway.",
+        'paths': {
+            'South': 'Kitchen',
+            'East': 'Dining Room',
+        },
+        'item': 'Key'
+    },
 
-            'Kitchen' : {
-                  'north' : 'Hall',
-                  'item'  : 'monster',
-                },
-            'Dining Room' : {
-                  'west' : 'Hall',
-                  'south': 'Garden',
-                  'item' : 'potion',
-                  'north' : 'Pantry',
-               },
-            'Garden' : {
-                  'north' : 'Dining Room'
-               },
-            'Pantry' : {
-                  'south' : 'Dining Room',
-                  'item' : 'cookie',
-            }
-         }
+    'Kitchen': {
+        'desc': "Dishes are piled in the sink. Seems like rats have taken over.",
+        'paths': {
+            'North': 'Hall'
+        },
+        'item': 'Sandwich',
+    },
+    'Dining Room': {
+        'desc': "The windows are boarded up. I wonder where the people went.",
+        'paths': {
+            'West': 'Hall',
+            'South': 'Garden',
+            'North': 'Pantry'
+        },
+        'item': 'Gun',
+    },
+    'Garden': {
+        'desc': "It's dark out there. No flowers are left.",
+        'locked': True,
+        'paths': {
+            'North': 'Dining Room'
+        }
+    },
+    'Pantry': {
+        'desc': "Everything's moldy. Yuck.",
+        'paths': {
+            'South': 'Dining Room'
+        },
+        'item': 'Knife',
+    }
+}
 
-#start the player in the Hall
-currentRoom = 'Hall'
+# create a zombie
+zombie = {
+    "health": 30,
+    "success": "The zombie bit you!",
+    "failure": "The zombie aimed for you and missed!"
+}
 
-showInstructions()
+hero = Player(inventory={"weapons": {}, "aid": {}})
 
-#loop forever
-while True:
+zombies = Game(items={**items}, rooms={**rooms})
 
-  showStatus()
+zombies.startGame(hero, zombie)
 
-  #get the player's next 'move'
-  #.split() breaks it up into an list array
-  #eg typing 'go east' would give the list:
-  #['go','east']
-  move = ''
-  while move == '':
-    move = input('>')
-
-  # split allows an items to have a space on them
-  # get golden key is returned ["get", "golden key"]          
-  move = move.lower().split(" ", 1)
-
-  #if they type 'go' first
-  if move[0] == 'go':
-    #check that they are allowed wherever they want to go
-    if move[1] in rooms[currentRoom]:
-      #set the current room to the new room
-      currentRoom = rooms[currentRoom][move[1]]
-    #there is no door (link) to the new room
-    else:
-        print('You can\'t go that way!')
-
-  #if they type 'get' first
-  if move[0] == 'get' :
-    #if the room contains an item, and the item is the one they want to get
-    if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-      #add the item to their inventory
-      inventory += [move[1]]
-      #display a helpful message
-      print(move[1] + ' got!')
-      #delete the item from the room
-      del rooms[currentRoom]['item']
-    #otherwise, if the item isn't there to get
-    else:
-      #tell them they can't get it
-      print('Can\'t get ' + move[1] + '!')
-      
-  ## Define how a player can win
-  if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
-    print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
-    break
-
-  ## If a player enters a room with a monster
-  elif 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-    print('A monster has got you... GAME OVER!')
-    break
 
