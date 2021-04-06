@@ -8,7 +8,7 @@ def main():
 
     while True:
         # challenge 1 = add input to ask for a pokemon to look up!
-        pokemon = input("What Pokemon would you like to search for? ")
+        pokemon = input("What Pokemon would you like to search for? ").lower()
         pokeapi = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon}").json()
 
         # challenge #2 print the url to the front-default image
