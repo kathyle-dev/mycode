@@ -5,7 +5,6 @@ import requests
 
 
 def main():
-
     while True:
         # challenge 1 = add input to ask for a pokemon to look up!
         pokemon = input("What Pokemon would you like to search for? ").lower()
@@ -26,4 +25,5 @@ def main():
             print("Name: ", move["move"]["name"])
 
 
-main()
+if __name__ == "__main__":
+    main()
