@@ -2,7 +2,7 @@
 <html>
    <body>
         {% for item in qparams %}
-      <h1>{{ ip }} {{ fqdn }} # {{hostname}} </h1>
+      <h1>{{ item.ip }} {{ item.fqdn }} # {{ item.hostname}} </h1>
         {% endfor %}
    </body>
 </html>
