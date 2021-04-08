@@ -1,8 +1,15 @@
 <!doctype html>
 <html>
    <body>
+    <h1>CURRENT GROUPS:</h1>
         {% for item in qparams %}
-      <h1>{{ item.ip }} {{ item.fqdn }} # {{ item.hostname}} </h1>
+      <p>{{ item.ip }} {{ item.fqdn }} # {{ item.hostname}} </p>
         {% endfor %}
    </body>
+
+    <h2>Admins can log in below to add a group</h2>
+     <form action = "/login" method = "post">
+      <p><input type = text name = username></p>
+      <p><input type = submit value = Login></p>
+   </form>
 </html>

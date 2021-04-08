@@ -10,39 +10,62 @@ from flask import request
 from groups import group_list
 
 app = Flask(__name__)
-app.secret_key = "any random string"
+app.secret_key = "IT'S A SECRET"
 
 
 ## If the user hits the root of our API
-@app.route("/")
+@app.route("/", methods=["POST","GET"])
 def index():
     ## if the key "username" has a value in session
-    # if "username" in session:
-    #   username = session["username"]
-    #   return "Logged in as " + username + "<br>" + \
-    #     "<b><a href = '/logout'>click here to log out</a></b>"
+    if request.method == "GET":
+        if "username" not in session:
+            return "You are an unauthorized user" + "<br>" + \
+                   "<b><a href = '/'>click here to log in</a></b>"
 
-    ## if the key "username" does not have a value in session
+    if request.method == "POST":
+        new_group = {
+            "hostname": request.form.get("hostname"),
+            "ip": request.form.get("ip"),
+            "fqdn": request.form.get("fqdn")
+        }
+        group_list.append(new_group)
+
     return render_template("hosts.html", qparams=group_list)
+
+@app.route("/add")
+def addAPost():
+    if getattr(session, "special"):
+        return """
+                <h2>add group information</h2>
+                <form action ="/" method = "post">
+                <p><input type = text placeholder="Hostname" name = hostname></p>
+                <p><input type = text placeholder="IP" name = ip></p>
+                <p><input type = text placeholder="FQDN" name = fqdn></p>
+                <p><input type = submit >Submit</p>
+                </form>
+                """
 
 
 ## If the user hits /login with a GET or POST
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["POST"])
 def login():
     ## if you sent us a POST because you clicked the login button
     if request.method == "POST":
         ## request.form["xyzkey"]: use indexing if you know the key exists
         ## request.form.get("xyzkey"): use get if the key might not exist
         session["username"] = request.form.get("username")
-        return redirect(url_for("index"))
-
+        if session["username"] == "admin":
+            session["special"] = "yes"
+            return redirect(url_for("addAPost"))
+    else:
     ## return this HTML data if you send us a GET
-    return """
-   <form action = "" method = "post">
-      <p><input type = text name = username></p>
-      <p><input type = submit value = Login></p>
-   </form>
-  """
+        return """
+        <h2>Error! Try to log in again:</h2>
+       <form action = "/login" method = "post">
+          <p><input type = text name = username></p>
+          <p><input type = submit value = Login></p>
+       </form>
+      """
 
 
 @app.route("/logout")
