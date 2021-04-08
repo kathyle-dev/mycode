@@ -14,7 +14,7 @@ app.secret_key = "IT'S A SECRET"
 
 
 ## If the user hits the root of our API
-@app.route("/", methods=["POST","GET"])
+@app.route("/", methods=["POST", "GET"])
 def index():
     ## if the key "username" has a value in session
     if request.method == "GET":
@@ -32,10 +32,10 @@ def index():
 
     return render_template("hosts.html", qparams=group_list)
 
+
 @app.route("/add")
 def addAPost():
-    if getattr(session, "special"):
-        return """
+    return """
                 <h2>add group information</h2>
                 <form action ="/" method = "post">
                 <p><input type = text placeholder="Hostname" name = hostname></p>
@@ -55,10 +55,9 @@ def login():
         ## request.form.get("xyzkey"): use get if the key might not exist
         session["username"] = request.form.get("username")
         if session["username"] == "admin":
-            session["special"] = "yes"
             return redirect(url_for("addAPost"))
     else:
-    ## return this HTML data if you send us a GET
+        ## return this HTML data if you send us a GET
         return """
         <h2>Log in:</h2>
        <form action = "/login" method = "post">
