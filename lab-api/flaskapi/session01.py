@@ -20,7 +20,7 @@ def index():
     if request.method == "GET":
         if "username" not in session:
             return "You are not logged in!" + "<br>" + \
-                   "<b><a href = '/'>click here to log in</a></b>"
+                   "<b><a href = '/login'>click here to log in</a></b>"
 
     if request.method == "POST":
         new_group = {
