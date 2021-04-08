@@ -47,7 +47,7 @@ def addAPost():
 
 
 ## If the user hits /login with a GET or POST
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["POST", "GET"])
 def login():
     ## if you sent us a POST because you clicked the login button
     if request.method == "POST":
