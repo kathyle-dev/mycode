@@ -19,7 +19,7 @@ def index():
     ## if the key "username" has a value in session
     if request.method == "GET":
         if "username" not in session:
-            return "You are an unauthorized user" + "<br>" + \
+            return "You are not logged in!" + "<br>" + \
                    "<b><a href = '/'>click here to log in</a></b>"
 
     if request.method == "POST":
@@ -60,7 +60,7 @@ def login():
     else:
     ## return this HTML data if you send us a GET
         return """
-        <h2>Error! Try to log in again:</h2>
+        <h2>Log in:</h2>
        <form action = "/login" method = "post">
           <p><input type = text name = username></p>
           <p><input type = submit value = Login></p>
