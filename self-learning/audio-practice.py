@@ -13,23 +13,23 @@ def speakText(prompt):
 
 
 def getCommands():
-    while True:
-        try:
-            with sr.Microphone() as source:
-                speakText("I am listening.")
-                print("listening....")
-                speech = ""
-                command_list = []
-                while speech != "stop":
-                    voice = listener.listen(source)
-                    speech = listener.recognize_google(voice)
-                    speakText(f"Entering {speech}")
-                    command_list.append(speech)
-                    print(speech)
-                return command_list
-            False
-        except:
-            pass
+    try:
+        with sr.Microphone() as source:
+            speakText("I am listening.")
+            print("listening....")
+            speech = ""
+            command_list = []
+            while True:
+                voice = listener.listen(source)
+                speech = listener.recognize_google(voice).lower()
+                if speech == "stop":
+                    break
+                speakText(f"Entering {speech}")
+                command_list.append(speech)
+                print(speech)
+            return command_list
+    except:
+        pass
 
 
 def runCommands(command_list):
@@ -38,7 +38,8 @@ def runCommands(command_list):
 
 def main():
     commands = getCommands()
-    runCommands(commands)
+    print(commands)
+    ##runCommands(commands)
 
 
 if __name__ == "__main__":
